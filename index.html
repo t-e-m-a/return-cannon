@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1115">
+<meta name="description" content="Calculate a Minecraft return pearl cannon and download a complete Litematica schematic, directly in your browser.">
+<title>Return Cannon Generator</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230b1115'/%3E%3Cpath d='M8 22V10h12v12Z' fill='none' stroke='%235de0bd' stroke-width='2'/%3E%3Cpath d='M12 18 25 5M18 5h7v7' fill='none' stroke='%235de0bd' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+<script type="module" src="app.mjs"></script>
+</head>
+<body>
+<svg class="icon-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+<symbol id="i-cube" viewBox="0 0 24 24"><path d="m12 3 9 5v8l-9 5-9-5V8l9-5Zm0 9v9M3 8l9 4 9-4M7.5 5.5l9 5"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 15v5h16v-5"/></symbol>
+<symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3"/><circle cx="15" cy="17" r="3"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+</defs></svg>
+<header class="topbar"><a class="brand" href="./" aria-label="Return Cannon home"><span class="brand-icon"><svg class="icon"><use href="#i-cube"/></svg></span> RETURN CANNON <span class="version">v1.0</span></a><div class="header-meta"><span>GENERATOR</span><span class="mc-badge">Minecraft 26.2</span></div></header>
+<main>
+<div class="page-heading"><div><p class="eyebrow">PEARL CANNON WORKSPACE</p><h1>Set a destination.<br class="mobile-br"> Build your way back.</h1><p class="subtitle">Calculate your launch. Download a complete cannon.</p></div><button type="button" class="text-button" id="load-example">Load example <span aria-hidden="true">↻</span></button></div>
+<div class="workspace">
+<aside class="input-column">
+<form id="calculator-form" class="panel input-panel">
+<div class="panel-heading"><h2><svg class="icon"><use href="#i-settings"/></svg>Launch configuration</h2><span class="step">01</span></div>
+<fieldset class="coord-group"><legend><span class="location-dot start-dot"></span>Start <span class="field-note">Placement origin · Y 128</span></legend><div class="coordinate-grid"><label for="sx">X coordinate<input id="sx" name="sx" inputmode="decimal" autocomplete="off" type="text" value="-651" required spellcheck="false"></label><label for="sz">Z coordinate<input id="sz" name="sz" inputmode="decimal" autocomplete="off" type="text" value="-1220" required spellcheck="false"></label></div></fieldset>
+<div class="coordinate-divider"><span></span><svg class="icon"><use href="#i-target"/></svg><span></span></div>
+<fieldset class="coord-group"><legend><span class="location-dot target-dot"></span>Target <span class="field-note">Your destination</span></legend><div class="coordinate-grid"><label for="tx">X coordinate<input id="tx" name="tx" inputmode="decimal" autocomplete="off" type="text" value="-69.5" required spellcheck="false"></label><label for="tz">Z coordinate<input id="tz" name="tz" inputmode="decimal" autocomplete="off" type="text" value="40.5" required spellcheck="false"></label></div></fieldset>
+<fieldset class="aligner-group"><legend>Aligner facing</legend><div class="segments" id="aligner-control"><label><input type="radio" name="aligner" value="North" checked><span>North</span></label><label><input type="radio" name="aligner" value="East"><span>East</span></label><label><input type="radio" name="aligner" value="South"><span>South</span></label><label><input type="radio" name="aligner" value="West"><span>West</span></label></div><p class="helper">Cannon facing is calculated from your destination.</p></fieldset>
+<button type="submit" id="calculate" class="primary-button"><svg class="icon"><use href="#i-target"/></svg><span>Calculate cannon</span></button>
+<p id="status" class="status" role="status" aria-live="polite">Example coordinates are ready to calculate.</p>
+</form>
+<div class="panel placement-note"><span class="note-icon"><svg class="icon"><use href="#i-cube"/></svg></span><div><h3>Place it right</h3><p>Set the schematic origin to your Start X, <strong>Y 128</strong>, and Start Z. Rotation and mirroring are already applied.</p></div></div>
+</aside>
+<section class="results-column" aria-label="Calculation results" aria-busy="false" id="result-region">
+<div class="panel result-panel">
+<div class="panel-heading"><h2>Launch solutions</h2><span class="result-count" id="result-count">No calculation yet</span></div>
+<div class="empty-state" id="empty-state"><span class="empty-icon"><svg class="icon"><use href="#i-target"/></svg></span><h3>Your return route starts here.</h3><p>Enter two locations and calculate to find<br>the closest launch solutions.</p><div class="empty-legend"><span class="red-swatch"></span> Red TNT <span class="blue-swatch"></span> Blue TNT</div></div>
+<div id="results" hidden>
+<div class="route-strip"><button class="route-location" id="copy-start" type="button" title="Copy Start teleport command"><span>START <svg class="icon small"><use href="#i-copy"/></svg></span><strong id="start-value"></strong></button><span class="route-connector" aria-hidden="true"></span><button class="route-location" id="copy-target" type="button" title="Copy Target teleport command; keeps your current Y"><span>TARGET <svg class="icon small"><use href="#i-copy"/></svg></span><strong id="target-value"></strong></button><div class="route-facing"><span>CANNON FACING</span><strong id="cannon-facing"></strong></div></div>
+<div class="metrics"><div class="metric"><span>LANDING ERROR</span><strong id="landing-error"></strong><small>blocks from target</small></div><div class="metric"><span>FLIGHT TIME</span><strong id="flight-ticks"></strong><small id="flight-seconds"></small></div><div class="metric"><span>TOTAL TNT</span><strong id="total-tnt"></strong><small>across both dupers</small></div></div>
+<div class="table-label"><span>Choose a solution</span><span>Sorted by landing error</span></div>
+<div class="table-scroll"><table><caption class="sr-only">Cannon launch solutions; choose a row to use that result.</caption><thead><tr><th scope="col">Use</th><th scope="col">Error <small>(blocks)</small></th><th scope="col">Ticks</th><th scope="col"><span class="red-swatch"></span>Red</th><th scope="col"><span class="blue-swatch"></span>Blue</th><th scope="col">Total</th></tr></thead><tbody id="solutions"></tbody></table></div>
+<div class="table-footer"><span id="shown-count"></span><button id="more-results" type="button" class="text-button">Show more</button></div>
+</div></div>
+<div class="panel export-panel" id="export-panel" hidden>
+<div class="export-top"><div><p class="eyebrow">YOUR SCHEMATIC</p><h2>Ready to build.</h2><p class="export-summary" id="export-summary"></p></div><button type="button" class="primary-button download-button" id="download"><svg class="icon"><use href="#i-download"/></svg><span>Download .litematic</span></button></div>
+<div class="stop-block"><div><span class="stop-label">STOP BLOCK</span><p id="stop-value"></p><span class="helper">Place one black stained glass block here.</span></div><button class="copy-button" type="button" id="copy-stop"><svg class="icon"><use href="#i-copy"/></svg><span>Copy coordinates</span></button></div>
+<details id="details"><summary>Launch details <span aria-hidden="true">+</span></summary><div class="detail-grid" id="details-content"></div></details>
+</div>
+</section>
+</div>
+<footer><span>RETURN CANNON <span class="footer-divider">/</span> BUILT FOR THE RETURN TRIP</span><span>Calculations & files stay in your browser.</span></footer>
+</main>
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+<noscript><p class="noscript">Enable JavaScript to calculate and generate a schematic.</p></noscript>
+</body></html>
